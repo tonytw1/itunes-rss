@@ -56,5 +56,5 @@ sbt docker:publishLocal
 ```
 
 ```
-docker run -p 9000:9000 9704f45f8d63
+docker run -p 9000:9000 podcasts-rss:0.1.0-SNAPSHOT
 ```

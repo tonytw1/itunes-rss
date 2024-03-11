@@ -28,3 +28,9 @@ dependencyOverrides ++=Seq(
 
 dockerBaseImage := "openjdk:11-jdk"
 dockerExposedPorts := Seq(9000)
+
+// RUNNING PID
+import com.typesafe.sbt.packager.docker.DockerChmodType
+import com.typesafe.sbt.packager.docker.DockerPermissionStrategy
+dockerChmodType := DockerChmodType.UserGroupWriteExecute
+dockerPermissionStrategy := DockerPermissionStrategy.CopyChown

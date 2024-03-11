@@ -26,5 +26,5 @@ dependencyOverrides ++=Seq(
   "ch.qos.logback" % "logback-classic" % "1.4.14",
 )
 
+dockerBaseImage := "openjdk:11-jdk"
 dockerExposedPorts := Seq(9000)
-

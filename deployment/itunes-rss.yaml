@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: itunes-rss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: itunes-rss
+  template:
+    metadata:
+      labels:
+          app: itunes-rss
+    spec:
+      containers:
+      - name: itunes-rss
+        image: eu.gcr.io/eelpie-public/podcasts-rss:0.1.0-SNAPSHOT
+        ports:
+        - containerPort: 9000
+        volumeMounts:
+        - name: config-volume
+          mountPath: /opt/docker/conf/application.conf
+          subPath: application.conf
+        env:
+          - name: APPLICATION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: itunes-play-secret
+                key: playsecret.txt
+          - name: API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: itunes-capi-key
+                key: apikey.txt
+        resources:
+          limits:
+            memory: "512Mi"
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 9000
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        imagePullPolicy: Always
+      volumes:
+      - name: config-volume
+        configMap:
+          name: itunes-rss
+          items:
+          - key: application.conf
+            path: application.conf

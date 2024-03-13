@@ -213,7 +213,7 @@ class iTunesRssItem(val podcast: Content, val tagId: String, asset: Asset, adFre
 
     <item>
       <title>{ title }</title>
-      <itunes:title>{ title }</itunes:title>
+      <itunes:title>{ title.toUpperCase() }</itunes:title>
       <description>{ description }</description>
       <enclosure url={ url } length={ sizeInBytes } type={ mType }/>
       <pubDate>{ pubDate }</pubDate>
